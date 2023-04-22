@@ -168,11 +168,6 @@ int main(int argc, char* argv[]) {
       }
     }
   }
-  for(int i = 0; i < cell_list.size(); i++){
-    if(cell_list[i].y_coord > height){
-      cout << "hi";
-    }
-  }
   //output
   ofstream output_stream;
   output_stream.open(argv[2]);
