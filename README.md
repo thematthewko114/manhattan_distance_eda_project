@@ -14,7 +14,7 @@ g++ main.cpp -o main.exe
 Run the executable with the file paths as arguments (e.g., ./testcases/input1.txt)
 
 ```
-main.exe <input_file> <output_file>
+./main.exe <input_file> <output_file>
 ```
 
 Well done, you're program should be running.
