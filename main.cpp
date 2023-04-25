@@ -168,6 +168,8 @@ int main(int argc, char* argv[]) {
       }
     }
   }
+  //cell weighting via optimal single row ordered placement
+  //cell shifting
   //output
   ofstream output_stream;
   output_stream.open(argv[2]);
