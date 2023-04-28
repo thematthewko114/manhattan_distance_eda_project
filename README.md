@@ -18,3 +18,9 @@ Run the executable with the file paths as arguments (e.g., ./testcases/input1.tx
 ```
 
 Well done, you're program should be running.
+
+## To run the evaluator
+Run this command to check the legality, boundness, overlapping and total displacement of cells
+```
+python3 evaluator.py <input_file> <output_file>
+```
