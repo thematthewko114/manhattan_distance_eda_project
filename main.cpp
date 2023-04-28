@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
   input_stream.close();
   // row assignment
   float scan_lower_bound = 0;
-  while (scan_lower_bound < height) {
+  while (scan_lower_bound+8 < height) {
     float scan_upper_bound = scan_lower_bound + 12;
     int count8 = 0;
     int count12 = 0;
@@ -179,7 +179,7 @@ int main(int argc, char* argv[]) {
     output_stream << row_list[i].y_coord << " " << row_list[i].height << endl;
   }
   for(int i = 0; i<cell_list.size(); i++){
-    output_stream << cell_list[i].name << " " << cell_list[i].y_coord << " " << round(cell_list[i].x_coord) << endl;
+    output_stream << cell_list[i].name << " " << cell_list[i].y_coord << " " << cell_list[i].x_coord << endl;
   }
   output_stream.close();
   auto stop = high_resolution_clock::now();
