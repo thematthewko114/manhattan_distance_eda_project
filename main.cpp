@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <chrono>
+#include <cmath>
 using namespace std;
 using namespace std::chrono;
 
@@ -176,12 +177,9 @@ int main(int argc, char* argv[]) {
   output_stream << row_list.size() << endl;
   for(int i = 0; i<row_list.size(); i++){
     output_stream << row_list[i].y_coord << " " << row_list[i].height << endl;
-    for(int j = 0; j<cell_list.size(); j++){
-      if(row_list[i].y_coord == cell_list[j].y_coord){
-        output_stream << cell_list[j].name << " " << cell_list[j].y_coord << " " << cell_list[j].x_coord << endl;
-      }
-    }
-
+  }
+  for(int i = 0; i<cell_list.size(); i++){
+    output_stream << cell_list[i].name << " " << cell_list[i].y_coord << " " << round(cell_list[i].x_coord) << endl;
   }
   output_stream.close();
   auto stop = high_resolution_clock::now();
