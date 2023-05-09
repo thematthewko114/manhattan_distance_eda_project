@@ -121,10 +121,17 @@ vector<Cell> quickSort(vector<Cell>& arr) {
     return sortedArr;
 }
 */
-vector<Cell> Merge(vector<Cell>& list, int pos){
+vector<Cell> Merge(vector<Cell>& list, int pos, int width){
   //Updated the merge cells' x coord and width
   list[pos-1].Merge = true;//Assign the pos-1 cell is now a merge cells
+
+
   list[pos-1].x_coord = list[pos].x_coord - list[pos-1].width;
+
+  if(list[pos-1].x_coord < 0){
+    list[pos-1].x_coord = 0;
+  }
+
   list[pos-1].width = list[pos-1].width + list[pos].width;
 
   list[pos-1].x_l = list[pos-1].x_coord;
@@ -151,14 +158,14 @@ else if(list[i-1].x_coord + list[i-1].width <= list[i].x_r){
        i++;
      }
      else{
-       list = Merge(list, i);
+       list = Merge(list, i, width);
        i--;
        n--;
    
      }    
 }
 else {//Merge the previous cells
-  list = Merge(list, i);
+  list = Merge(list, i, width);
   i--;
   n--;
 }
@@ -297,13 +304,13 @@ int main(int argc, char* argv[]) {
       }
     }
   }
-
 //scan downward the row from the top to bottom to sign the unsigned cells
   for (int i = 0; i < unassigned_cells.size(); i++) {
     for(int j = row_list.size()-1; j>=0; j--){
       if(unassigned_cells[i].height == row_list[j].height && row_list[j].total_width+unassigned_cells[i].width <=width){
         int cellIndex = stoi(unassigned_cells[i].name.erase(0,1));
         cell_list[cellIndex].y_coord = row_list[j].y_coord;
+        row_list[j].total_width+=unassigned_cells[i].width;
         break;
       }
     }
@@ -321,18 +328,6 @@ int n = 0;
     }
   }
  }
-
- //Test out of region
- for(int i = 0; i < row_list.size(); i++){
-  int width_sum = 0;
-  for (int j = 0; j < row_list[i].cells_in_row.size(); j++){
-    width_sum += row_list[i].cells_in_row[j].width;
-  }
-  if(width_sum > width){
-    cout << "\nRow " << i <<" Out of Region! Width is: "<< width_sum << " while the constraint is "<< width <<endl;
-  }
-}
-//cout << row_list[0].cells_in_row.size() << endl;
 
 //Sorting based on x_coordinate, create cell list for each row for further legalization
 for(int i = 0; i < row_list.size(); i++){
@@ -375,29 +370,7 @@ while(n < row_list[i].list.size()){//list size after merge
   }
   n++;
 }
-
 }
-
- //Test priority sorting (Now, a priority based sorted cell list for each row can be obtained)
-/*
- int row = 0;
- cout<<"Row height is: "<< row_list[row].height<<endl;
- cout<<"\nCells_in_row_Legalization:  "<< row <<":" << endl;
- for(int k = 0; k < row_list[row].cells_in_row.size(); k++){
-  cout << row_list[row].cells_in_row[k].name<<" x coor: "<<row_list[row].cells_in_row[k].x_coord<<" width: " <<row_list[row].cells_in_row[k].width
-  << " x_l: "<< row_list[row].cells_in_row[k].x_l<< " x_r: "<< row_list[row].cells_in_row[k].x_r<< endl;
- }
- */
-
- //Test output List
-/*
- cout<<"\nList_in_row "<< row <<":" << endl;
- for(int k = 0; k < row_list[row].list.size(); k++){
-  cout << row_list[row].list[k].name<<" x coor: "<<row_list[row].list[k].x_coord<<" width: " <<row_list[row].list[k].width
-  << " x_l: "<< row_list[row].list[k].x_l<< " x_r: "<< row_list[row].list[k].x_r<< " Bool of Merge is "<< row_list[row].list[k].Merge
-  << " Size of Merge Cells: " << row_list[row].list[k].MergeCell.size()<<endl;
- }
-*/
  vector<Cell> Cell_list_for_sort;
 //Assign back to the cells_list
 for(int i = 0; i < row_list.size(); i++){
@@ -405,20 +378,8 @@ for(int i = 0; i < row_list.size(); i++){
     Cell_list_for_sort.push_back(row_list[i].cells_in_row[j]);
 }
 }
-
 sort(Cell_list_for_sort.begin(),Cell_list_for_sort.end(),cmp);
 cell_list = Cell_list_for_sort;
-/*
-cout << "\nLength of Cell_list_for_sort: "<< Cell_list_for_sort.size() << endl;
-for(int k = 0; k < Cell_list_for_sort.size(); k++){
-  cout << Cell_list_for_sort[k].name<<" y coor: "<<Cell_list_for_sort[k].y_coord<<" x coor: "<<Cell_list_for_sort[k].x_coord<<" width: " <<Cell_list_for_sort[k].width<<endl;
- }
-cout << "\nLength of Cell_list_for_output: "<< cell_list.size() << endl;
- for(int k = 0; k < cell_list.size(); k++){
-  cout << cell_list[k].name<<" y coor: "<<cell_list[k].y_coord<<" x coor: "<<cell_list[k].x_coord<<" width: " <<cell_list[k].width<<endl;
- }
-*/
-
 
 ///////////////////////////////////////////////////////////
   //output
